@@ -1,0 +1,27 @@
+
+@import "tailwindcss";
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+/* clerk User Button */
+.cl-avatarBox {
+width: 2rem;
+height: 2rem;
+margin-top: 4px;
+overflow: hidden;
+}
+    
+
+
+a {
+  font-weight: 500;
+  color: #080809ff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #f25353ff;
+}
+
+
+
