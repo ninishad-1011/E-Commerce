@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 import axios from "axios";
 
 export const DataContext = createContext();
@@ -12,7 +12,6 @@ export const DataProvider = ({ children }) => {
       const response = await axios.get(
         "https://api.escuelajs.co/api/v1/products"
       );
-    //   console.log("Products fetched successfully", response.data);
       const products = response.data;
       setData(products);
     } catch (error) {
@@ -26,3 +25,6 @@ export const DataProvider = ({ children }) => {
     </DataContext.Provider>
   );
 };
+
+// Custom hook to use the DataContext
+export const useData = () => useContext(DataContext);
