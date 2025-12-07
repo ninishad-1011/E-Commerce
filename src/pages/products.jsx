@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { useData } from "../context/DataContext";
 import FilterSection from "../components/filtersection";
-import ProductCard from '../components/productcard';
-import Pagination from '../components/Pagination';
+import ProductCard from "../components/productcard";
+import Pagination from "../components/Pagination";
+import Lottie from "lottie-react";
+import notfound from "../assets/notfound.json";
 
 const Products = () => {
   const { data, fetchallproducts } = useData();
@@ -30,12 +32,13 @@ const Products = () => {
 
   const pageHandler = (selectedPage) => setPage(selectedPage);
 
-  const filteredProducts = data?.filter(p =>
-    (category === "All" || p.category.name === category) &&
-    (brand === "All" || p.brand === brand) &&
-    p.price >= pricerange[0] &&
-    p.price <= pricerange[1] &&
-    p.title.toLowerCase().includes(search.toLowerCase())
+  const filteredProducts = data?.filter(
+    (p) =>
+      (category === "All" || p.category.name === category) &&
+      (brand === "All" || p.brand === brand) &&
+      p.price >= pricerange[0] &&
+      p.price <= pricerange[1] &&
+      p.title.toLowerCase().includes(search.toLowerCase())
   );
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -69,7 +72,13 @@ const Products = () => {
                     <ProductCard key={index} product={product} />
                   ))
               ) : (
-                <div>No items found</div>
+                <div className="flex justify-center items-center md:h-[600px] md:w-[900px] mt-10">
+                  <Lottie
+                    animationData={notfound}
+                    loop={true}
+                    className="w-96 h-96 mx-auto"
+                  />
+                </div>
               )}
             </div>
 
