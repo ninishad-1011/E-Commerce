@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useData } from "../context/DataContext";
 import FilterSection from "../components/filtersection";
-import ProductCard from '../components/productcard'
+import ProductCard from '../components/productcard';
+import Pagination from '../components/Pagination';
 
 const Products = () => {
   const { data, fetchallproducts } = useData();
@@ -10,6 +11,8 @@ const Products = () => {
   const [category, setCategory] = useState("All");
   const [brand, setBrand] = useState("All");
   const [pricerange, setPricerange] = useState([0, 5000]);
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 8; // Ek page e koto product dekhabo
 
   useEffect(() => {
     fetchallproducts();
@@ -22,7 +25,10 @@ const Products = () => {
     setCategory("All");
     setBrand("All");
     setPricerange([0, 5000]);
+    setPage(1);
   };
+
+  const pageHandler = (selectedPage) => setPage(selectedPage);
 
   const filteredProducts = data?.filter(p =>
     (category === "All" || p.category.name === category) &&
@@ -31,6 +37,8 @@ const Products = () => {
     p.price <= pricerange[1] &&
     p.title.toLowerCase().includes(search.toLowerCase())
   );
+
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
   return (
     <div className="max-w-6xl mx-auto px-4 mb-10">
@@ -51,14 +59,27 @@ const Products = () => {
             setPricerange={setPricerange}
           />
 
-          {/* Products */}
-          <div className="grid grid-cols-4 gap-7 mt-10">
-            {filteredProducts.length > 0 ? (
-              filteredProducts.map((product, index) => (
-                <ProductCard key={index} product={product} />
-              ))
-            ) : (
-              <div>No items found</div>
+          {/* Products Section */}
+          <div className="flex-1">
+            <div className="grid grid-cols-4 gap-7 mt-10">
+              {filteredProducts.length > 0 ? (
+                filteredProducts
+                  .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                  .map((product, index) => (
+                    <ProductCard key={index} product={product} />
+                  ))
+              ) : (
+                <div>No items found</div>
+              )}
+            </div>
+
+            {/* Pagination */}
+            {filteredProducts.length > itemsPerPage && (
+              <Pagination
+                pageHandler={pageHandler}
+                page={page}
+                totalPages={totalPages}
+              />
             )}
           </div>
         </div>
