@@ -2,19 +2,9 @@ import React, { useEffect } from "react";
 import { useData } from "../context/DataContext";
 
 const Category = () => {
-  const { data, fetchallproducts } = useData();
+  const { data, fetchallproducts, categoryOnlyData } = useData();
 
-  const uniqueCategories = (data) => {
-    let newval = data?.map((curElm) => curElm.category.name);
-    newval = [...new Set(newval)];
-    return newval;
-  };
-
-  const categoryOnlyData = uniqueCategories(data);
-  console.log("Category Data", categoryOnlyData);
-
-  console.log("Category Data", categoryOnlyData);
-
+  
   useEffect(() => {
     fetchallproducts();
   }, []);

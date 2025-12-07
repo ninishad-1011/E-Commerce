@@ -18,9 +18,17 @@ export const DataProvider = ({ children }) => {
       console.error("Error fetching products:", error);
     }
   };
+  
+  const uniqueCategories = (data) => {
+    let newval = data?.map((curElm) => curElm.category.name);
+    newval = ["All",...new Set(newval)];
+    return newval;
+  };
 
+  const categoryOnlyData = uniqueCategories(data,"category");
+  const brandOnlyData = uniqueCategories(data,"brand")
   return (
-    <DataContext.Provider value={{ data, setData, fetchallproducts }}>
+    <DataContext.Provider value={{ data, setData, fetchallproducts,categoryOnlyData,brandOnlyData }}>
       {children}
     </DataContext.Provider>
   );
