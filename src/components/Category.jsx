@@ -16,15 +16,16 @@ const Category = () => {
         className="
           max-w-7xl mx-auto 
           py-5 px-4 
-          
+
           flex gap-3 
           whitespace-nowrap 
-
-          overflow-x-auto       /* Mobile/Tablet scroll */
-          scrollbar-hide        
+          justify-center       /* Center items */
+          
+          overflow-x-auto      /* Mobile/Tablet scroll */
+          scrollbar-hide       
 
           lg:overflow-x-visible /* Desktop: No scroll */
-          lg:flex-wrap          /* Desktop: Wrap into multiple rows if needed */
+          lg:flex-wrap           /* Desktop: Wrap into multiple rows if needed */
         "
       >
         {categoryOnlyData && categoryOnlyData.length > 0 ? (
@@ -41,7 +42,7 @@ const Category = () => {
                 cursor-pointer 
                 text-sm 
                 sm:text-base 
-                flex-shrink-0 
+                flex-shrink-0
               "
             >
               {item}
