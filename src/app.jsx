@@ -7,13 +7,14 @@ import { CartProvider } from "./context/CardContext";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
+import About from "./pages/about";
+import Contact from "./pages/contact";
 import Products from "./pages/Products";
 import SingleProducts from "./pages/singleProduct";
-import Cart from "./pages/Cart";
+import Cart from "./pages/cart";
 import Footer from "./components/Footer";
 import CategoryProducts from "./pages/categoryProducts";
+import OrderSuccessPage from "./pages/orderSucces";
 
 const App = () => {
   const [location, setLocation] = useState(null);
@@ -68,6 +69,7 @@ const App = () => {
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<SingleProducts />} />
           <Route path="/category/:category" element={<CategoryProducts />} />
+        <Route path="/orderSuccess" element={<OrderSuccessPage />} />
           <Route
             path="/cart"
             element={<Cart location={location} getLocation={getLocation} />}
