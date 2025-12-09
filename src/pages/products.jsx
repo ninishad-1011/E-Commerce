@@ -5,6 +5,7 @@ import ProductCard from "../components/productcard";
 import Pagination from "../components/Pagination";
 import Lottie from "lottie-react";
 import notfound from "../assets/notfound.json";
+import Loading from "../assets/Loading4.webm"
 
 const Products = () => {
   const { data, fetchallproducts } = useData();
@@ -18,6 +19,7 @@ const Products = () => {
 
   useEffect(() => {
     fetchallproducts();
+    window.scrollTo(0,0)
   }, []);
 
   const handleCategoryChange = (e) => setCategory(e.target.value);
@@ -64,7 +66,7 @@ const Products = () => {
 
           {/* Products Section */}
           <div className="flex-1">
-            <div className="grid grid-cols-4 gap-7 mt-10">
+            <div className="grid grid-cols-4 gap-3 mt-10">
               {filteredProducts.length > 0 ? (
                 filteredProducts
                   .slice((page - 1) * itemsPerPage, page * itemsPerPage)
@@ -93,7 +95,11 @@ const Products = () => {
           </div>
         </div>
       ) : (
-        <div>Loading products...</div>
+         <div className='flex items-center justify-center h-[400px]'>
+              <video muted autoPlay loop>
+                <source src={Loading} type='video/webm' />
+              </video>
+            </div>
       )}
     </div>
   );
