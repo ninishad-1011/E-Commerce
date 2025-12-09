@@ -13,6 +13,7 @@ import Products from "./pages/Products";
 import SingleProducts from "./pages/singleProduct";
 import Cart from "./pages/Cart";
 import Footer from "./components/Footer";
+import CategoryProducts from "./pages/categoryProducts";
 
 const App = () => {
   const [location, setLocation] = useState(null);
@@ -66,6 +67,7 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<SingleProducts />} />
+          <Route path="/category/:category" element={<CategoryProducts />} />
           <Route
             path="/cart"
             element={<Cart location={location} getLocation={getLocation} />}
