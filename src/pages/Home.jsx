@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Carousel from '../components/Carousel'
-import MidBanner from '../components/Midbanner'
+
+import MidBanner from '../components/MidBanner'
 import Features from '../components/feature'
 
 const Home = () => {
+  
   return (
-    <>
+    <div className='overflow-x-hidden'>
       <Carousel/>
       <MidBanner/>
       <Features/>
-    
-    </>
+    </div>
   )
 }
 

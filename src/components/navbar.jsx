@@ -1,26 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { MapPin } from "lucide-react";
 import { FaCaretDown, FaCartArrowDown } from "react-icons/fa";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
-import { CgClose } from "react-icons/cg";
+import ResponsiveMenu from "./ResponsiveMenu"; // Corrected import
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import { CgClose, CgCloseO } from "react-icons/cg";
 import { useCart } from "../context/CardContext";
+import { HiMenuAlt1, HiMenuAlt3 } from "react-icons/hi";
 
 const Navbar = ({ location, getLocation, openDropdown, setOpenDropdown }) => {
-
-  const {cartItem} =useCart();
+  const [openNav, setOpenNav] = useState(false);
+  const { cartItem } = useCart();
 
   const toggleDropdown = () => {
     setOpenDropdown(!openDropdown);
   };
 
   return (
-    <div className="bg-white py-3 shadow-md sticky top-0 z-50">
+    <div className="bg-white py-3 shadow-md px-4 md:px-0">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
         {/* Logo + Location */}
         <div className="flex items-center gap-7">
@@ -31,8 +28,8 @@ const Navbar = ({ location, getLocation, openDropdown, setOpenDropdown }) => {
             </h1>
           </Link>
 
-          {/* Location Dropdown Wrapper */}
-          <div className="relative">
+          {/* Location Dropdown */}
+          <div className="relative hidden md:flex">
             <div
               className="flex gap-1 cursor-pointer text-gray-700 items-center"
               onClick={toggleDropdown}
@@ -41,7 +38,7 @@ const Navbar = ({ location, getLocation, openDropdown, setOpenDropdown }) => {
               <span className="font-semibold">
                 {location ? (
                   <div>
-                    <p>{location.amenity }</p>
+                    <p>{location.amenity}</p>
                     <p>{location.road}</p>
                   </div>
                 ) : (
@@ -51,13 +48,12 @@ const Navbar = ({ location, getLocation, openDropdown, setOpenDropdown }) => {
               <FaCaretDown />
             </div>
 
-            {/* Dropdown */}
             {openDropdown && (
               <div className="absolute top-10 left-0 w-[260px] z-50 bg-white shadow-md p-5 border-gray-200 border rounded-md">
                 <h1 className="font-semibold mb-4 text-xl flex justify-between">
                   Change Location
                   <span className="cursor-pointer" onClick={toggleDropdown}>
-                    <CgClose />
+                    <CgCloseO />
                   </span>
                 </h1>
                 <button
@@ -71,71 +67,25 @@ const Navbar = ({ location, getLocation, openDropdown, setOpenDropdown }) => {
           </div>
         </div>
 
-        {/* Menu Section */}
+        {/* Menu */}
         <nav className="flex gap-7 items-center">
-          <ul className="flex gap-7 items-center text-xl font-semibold text-black">
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  `${
-                    isActive
-                      ? "border-b-4 border-red-500 transition-all text-red-500"
-                      : "text-black"
-                  } cursor-pointer`
-                }
-              >
-                Home
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/products"
-                className={({ isActive }) =>
-                  `${
-                    isActive
-                      ? "border-b-4 border-red-500 transition-all text-red-500"
-                      : "text-black"
-                  } cursor-pointer`
-                }
-              >
-                Products
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/about"
-                className={({ isActive }) =>
-                  `${
-                    isActive
-                      ? "border-b-4 border-red-500 transition-all text-red-500"
-                      : "text-black"
-                  } cursor-pointer`
-                }
-              >
-                About
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/contact"
-                className={({ isActive }) =>
-                  `${
-                    isActive
-                      ? "border-b-4 border-red-500 transition-all text-red-500"
-                      : "text-black"
-                  } cursor-pointer`
-                }
-              >
-                Contact
-              </NavLink>
-            </li>
+          <ul className="flex gap-7 hidden md:flex items-center text-xl font-semibold text-black">
+            {["/", "/products", "/about", "/contact"].map((path, idx) => (
+              <li key={idx}>
+                <NavLink
+                  to={path}
+                  onClick={() => window.scrollTo(0, 0)}
+                  className={({ isActive }) =>
+                    `${isActive ? "border-b-4 border-red-500 text-red-500" : "text-black"} cursor-pointer transition-all`
+                  }
+                >
+                  {["Home", "Products", "About", "Contact"][idx]}
+                </NavLink>
+              </li>
+            ))}
           </ul>
 
-          {/* Cart Icon */}
+          {/* Cart */}
           <Link to="/cart" className="relative">
             <FaCartArrowDown className="h-7 w-7" />
             <span className="absolute -top-3 -right-3 bg-red-500 px-2 py-1 rounded-full text-white text-sm">
@@ -144,7 +94,7 @@ const Navbar = ({ location, getLocation, openDropdown, setOpenDropdown }) => {
           </Link>
 
           {/* Clerk Auth */}
-          <div>
+          <div className="hidden md:block">
             <SignedOut>
               <SignInButton />
             </SignedOut>
@@ -152,8 +102,18 @@ const Navbar = ({ location, getLocation, openDropdown, setOpenDropdown }) => {
               <UserButton />
             </SignedIn>
           </div>
+
+          {/* Mobile Hamburger */}
+          {openNav ? (
+            <HiMenuAlt3 onClick={() => setOpenNav(false)} className="h-7 w-7 md:hidden cursor-pointer" />
+          ) : (
+            <HiMenuAlt1 onClick={() => setOpenNav(true)} className="h-7 w-7 md:hidden cursor-pointer" />
+          )}
         </nav>
       </div>
+
+      {/* Mobile Menu */}
+      <ResponsiveMenu openNav={openNav} setOpenNav={setOpenNav} />
     </div>
   );
 };

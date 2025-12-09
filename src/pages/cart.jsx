@@ -13,92 +13,103 @@ const Cart = ({ location, getLocation }) => {
   const { user } = useUser();
   const navigate = useNavigate();
 
-  const totalPrice = cartItem.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
-
+  const totalPrice = cartItem.reduce((total, item) => total + item.price, 0);
   return (
     <div className="mt-10 max-w-6xl mx-auto mb-5 px-4 md:px-0">
       {cartItem.length > 0 ? (
         <div>
-          <h1 className="font-bold text-2xl">My Cart ({cartItem.length})</h1>
-          <div className="mt-10">
-            {cartItem.map((item, index) => (
-              <div
-                key={index}
-                className="bg-gray-100 p-5 rounded-md flex items-center justify-between mt-3 w-full"
-              >
-                <div className="flex items-center gap-4">
-                  <img
-                    src={item.images}
-                    alt={item.title}
-                    className="w-20 h-20 rounded-md"
-                  />
-                  <div>
-                    <h1 className="md:w-[300px] line-clamp-2">{item.title}</h1>
-                    <p className="text-red-500 font-semibold text-lg">
-                      ${item.price * item.quantity}
-                    </p>
-                  </div>
-                </div>
-                <div className="bg-red-500 text-white flex gap-4 p-2 rounded-md font-bold text-xl">
-                  <button
-                    onClick={() => updateQuantity(cartItem, item.id, "decrease")}
-                    className="cursor-pointer"
+          <h1 className="font-bold text-2xl ">My Cart ({cartItem.length})</h1>
+          <div>
+            <div className="mt-10">
+              {cartItem.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="bg-gray-100 p-5 rounded-md flex items-center justify-between mt-3 w-full"
                   >
-                    -
-                  </button>
-                  <span>{item.quantity}</span>
-                  <button
-                    onClick={() => updateQuantity(cartItem, item.id, "increase")}
-                    className="cursor-pointer"
-                  >
-                    +
-                  </button>
-                </div>
-                <span
-                  onClick={() => deleteItem(item.id)}
-                  className="hover:bg-white/60 transition-all rounded-full p-3 hover:shadow-2xl"
-                >
-                  <FaRegTrashAlt className="text-red-500 text-2xl cursor-pointer" />
-                </span>
-              </div>
-            ))}
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={item.images}
+                        alt={item.title}
+                        className="w-20 h-20 rounded-md"
+                      />
+                      <div>
+                        <h1 className="md:w-[300px] line-clamp-2 ">
+                          {item.title}
+                        </h1>
+                        <p className="text-red-500 font-semibold text-lg">
+                          ${item.price}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="bg-red-500 text-white flex gap-2 sm:gap-3 md:gap-4 p-1 sm:p-2 md:p-3 rounded-md w-20 sm:w-24 md:w-[150px] font-bold text-sm sm:text-base md:text-xl">
+                      <button
+                        onClick={() =>
+                          updateQuantity(cartItem, item.id, "decrease")
+                        }
+                        className="cursor-pointer px-2 sm:px-3 md:px-4"
+                      >
+                        -
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button
+                        onClick={() =>
+                          updateQuantity(cartItem, item.id, "increase")
+                        }
+                        className="cursor-pointer px-2 sm:px-3 md:px-4"
+                      >
+                        +
+                      </button>
+                    </div>
 
-            {/* Billing section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 md:gap-20 mt-10">
-              <div className="bg-gray-100 rounded-md p-7 space-y-2">
-                <h1 className="text-gray-800 font-bold text-xl">Delivery Info</h1>
+                    <span
+                      onClick={() => deleteItem(item.id)}
+                      className="hover:bg-white/60 transition-all rounded-full p-3 hover:shadow-2xl"
+                    >
+                      <FaRegTrashAlt className="text-red-500 text-2xl cursor-pointer" />
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 md:gap-20">
+              <div className="bg-gray-100 rounded-md p-7 mt-4 space-y-2">
+                <h1 className="text-gray-800 font-bold text-xl">
+                  Delivery Info
+                </h1>
                 <div className="flex flex-col space-y-1">
-                  <label>Full Name</label>
+                  <label htmlFor="">Full Name</label>
                   <input
                     type="text"
+                    placeholder="Enter your name"
                     className="p-2 rounded-md"
                     value={user?.fullName}
                   />
                 </div>
                 <div className="flex flex-col space-y-1">
-                  <label>Address</label>
+                  <label htmlFor="">Address</label>
                   <input
                     type="text"
+                    placeholder="Enter your address"
                     className="p-2 rounded-md"
                     value={location?.county}
                   />
                 </div>
                 <div className="flex w-full gap-5">
                   <div className="flex flex-col space-y-1 w-full">
-                    <label>State</label>
+                    <label htmlFor="">State</label>
                     <input
                       type="text"
+                      placeholder="Enter your state"
                       className="p-2 rounded-md w-full"
                       value={location?.state}
                     />
                   </div>
                   <div className="flex flex-col space-y-1 w-full">
-                    <label>PostCode</label>
+                    <label htmlFor="">PostCode</label>
                     <input
                       type="text"
+                      placeholder="Enter your postcode"
                       className="p-2 rounded-md w-full"
                       value={location?.postcode}
                     />
@@ -106,19 +117,24 @@ const Cart = ({ location, getLocation }) => {
                 </div>
                 <div className="flex w-full gap-5">
                   <div className="flex flex-col space-y-1 w-full">
-                    <label>Country</label>
+                    <label htmlFor="">Country</label>
                     <input
                       type="text"
+                      placeholder="Enter your country"
                       className="p-2 rounded-md w-full"
                       value={location?.country}
                     />
                   </div>
                   <div className="flex flex-col space-y-1 w-full">
-                    <label>Phone No</label>
-                    <input type="text" className="p-2 rounded-md w-full" />
+                    <label htmlFor="">Phone No</label>
+                    <input
+                      type="text"
+                      placeholder="Enter your Number"
+                      className="p-2 rounded-md w-full"
+                    />
                   </div>
                 </div>
-                <button className="bg-red-500 text-white px-3 py-1 rounded-md mt-3">
+                <button className="bg-red-500 text-white px-3 py-1 rounded-md mt-3 cursor-pointer">
                   Submit
                 </button>
                 <div className="flex items-center justify-center w-full text-gray-700">
@@ -133,19 +149,24 @@ const Cart = ({ location, getLocation }) => {
                   </button>
                 </div>
               </div>
-
-              <div className="bg-white border border-gray-100 shadow-xl rounded-md p-7 space-y-2 h-max">
-                <h1 className="text-gray-800 font-bold text-xl">Bill details</h1>
+              <div className="bg-white border border-gray-100 shadow-xl rounded-md p-7 mt-4 space-y-2 h-max">
+                <h1 className="text-gray-800 font-bold text-xl">
+                  Bill details
+                </h1>
                 <div className="flex justify-between items-center">
                   <h1 className="flex gap-1 items-center text-gray-700">
-                    <LuNotebookText />
+                    <span>
+                      <LuNotebookText />
+                    </span>
                     Items total
                   </h1>
-                  <p className="text-red-500 font-semibold text-lg">${totalPrice}</p>
+                  <p>${totalPrice}</p>
                 </div>
                 <div className="flex justify-between items-center">
                   <h1 className="flex gap-1 items-center text-gray-700">
-                    <MdDeliveryDining />
+                    <span>
+                      <MdDeliveryDining />
+                    </span>
                     Delivery Charge
                   </h1>
                   <p className="text-red-500 font-semibold">
@@ -154,7 +175,9 @@ const Cart = ({ location, getLocation }) => {
                 </div>
                 <div className="flex justify-between items-center">
                   <h1 className="flex gap-1 items-center text-gray-700">
-                    <GiShoppingBag />
+                    <span>
+                      <GiShoppingBag />
+                    </span>
                     Handling Charge
                   </h1>
                   <p className="text-red-500 font-semibold">$5</p>
