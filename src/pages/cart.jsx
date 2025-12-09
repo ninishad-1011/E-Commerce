@@ -20,8 +20,8 @@ const totalPrice = cartItem.reduce(
 
   // Checkout handle
   const handleCheckout = () => {
-    setCartItem([]); // Cart খালি করা
-    navigate("/ordersuccess"); // Order success page এ যাওয়া
+    setCartItem([]); 
+    navigate("/ordersuccess"); 
   };
 
   return (

@@ -35,7 +35,7 @@ const Carousel = () => {
     );
   };
 
-  // Right Arrow
+
   const SampleNextArrow = ({ className, style, onClick }) => {
     return (
       <div
@@ -132,7 +132,7 @@ const Carousel = () => {
         ))}
       </Slider>
 
-      {/* Category Under Carousel */}
+  
       <Category />
     </div>
   );

@@ -103,7 +103,7 @@ const Navbar = ({ location, getLocation, openDropdown, setOpenDropdown }) => {
             </SignedIn>
           </div>
 
-          {/* Mobile Hamburger */}
+        
           {openNav ? (
             <HiMenuAlt3 onClick={() => setOpenNav(false)} className="h-7 w-7 md:hidden cursor-pointer" />
           ) : (

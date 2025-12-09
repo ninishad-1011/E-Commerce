@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import Carousel from '../components/Carousel'
 
-import MidBanner from '../components/MidBanner'
+import MidBanner from '../components/Midbanner'
 import Features from '../components/feature'
 
 const Home = () => {
